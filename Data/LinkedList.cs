@@ -7,15 +7,28 @@ namespace DataStructures
 {
     public record LinkedList<T> : Item<T>, INext<T> where T: class
     {
-        public LinkedList(T? data) 
+        public LinkedList(T data) 
         {
             Data = data;
         }
         
-        public Item<T>? Next
+        public LinkedList<T>? Next { get; set; }
+
+        public void Add(T value)
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            if (Next is null)
+            {
+                Next = new LinkedList<T>(value);
+            }
+            else
+            {
+                var newValue = new LinkedList<T>(value)
+                {
+                    Next = this.Next
+                };
+                
+                Next = newValue;
+            }
         }
     }
 }
