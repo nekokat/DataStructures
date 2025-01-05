@@ -11,6 +11,8 @@ namespace DataStructures
         {
             Data = data;
         }
+
+        public LinkedList() : this(default(T)){}
         
         public LinkedList<T>? Next { get; set; }
 
@@ -26,7 +28,7 @@ namespace DataStructures
                 {
                     Next = this.Next
                 };
-                
+
                 Next = newValue;
             }
         }
