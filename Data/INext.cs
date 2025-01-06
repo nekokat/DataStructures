@@ -7,6 +7,6 @@ namespace DataStructures
 {
     public interface INext<T> where T : class
     {
-        public LinkedList<T>? Next { get; set;}
+        public Node<T>? Next { get; set;}
     }
 }

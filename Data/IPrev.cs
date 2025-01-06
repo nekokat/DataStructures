@@ -7,6 +7,6 @@ namespace DataStructures
 {
     public interface IPrev<T> where T : class
     {
-        public LinkedList<T>? Previous { get; set;}
+        public Node<T>? Previous { get; set;}
     }
 }

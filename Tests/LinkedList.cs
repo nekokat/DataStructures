@@ -8,16 +8,16 @@ public class LinkedListTests
     [TestCase("Three")]
     public void LinkedListStringDataTest(string value)
     {
-        Assert.That(new DataStructures.LinkedList<string>(value).Data, Is.EqualTo(value));
+        Assert.That(new DataStructures.LinkedList<string>(value).Current.Data, Is.EqualTo(value));
     }
 
     [Test]
     public void LinkedListAddDataTest()
     {
         var value = new DataStructures.LinkedList<string>("One");
-        value.Add("Two");
+        value.AddAfter("Two");
         Assert.That(value?.Next?.Data, Is.EqualTo("Two"));
-        value?.Add("Three");
+        value?.AddAfter("Three");
         Assert.That(value?.Next?.Data, Is.EqualTo("Three"));
         Assert.That(value?.Next?.Next?.Data, Is.EqualTo("Two"));
     }
