@@ -18,9 +18,9 @@ public class LinkedListTests
     public void LinkedListAddDataTest()
     {
         var value = new DataStructures.LinkedList<string>("One");
-        value.AddAfter("Two");
+        value.AddLast("Two");
         Assert.That(value?.Next?.Data, Is.EqualTo("Two"));
-        value?.AddAfter("Three");
+        value?.AddLast("Three");
         Assert.That(value?.Next?.Data, Is.EqualTo("Three"));
         Assert.That(value?.Next?.Next?.Data, Is.EqualTo("Two"));
     }

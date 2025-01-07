@@ -1,11 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public record LinkedList<T> where T: class
+    public record LinkedList<T> : ICollection<T>, ICollection where T: class
     {
         Node<T>? head;
         Node<T>? current;
@@ -22,6 +23,12 @@ namespace DataStructures
             set => (current = new Node<T>(default)).Next = value;
         }
 
+        public bool IsReadOnly => throw new NotImplementedException();
+
+        public bool IsSynchronized => throw new NotImplementedException();
+
+        public object SyncRoot => throw new NotImplementedException();
+
         public LinkedList() : this(default(T)){}
 
 
@@ -36,24 +43,15 @@ namespace DataStructures
 
         public LinkedList(T[] data)
         {
-            Node<T>? value = default;
+            Add(data);
+        }
 
+        private void Add(T[] data)
+        {
             foreach (T item in data)
             {
-                value = new(item);
-
-                if (head is null)
-                {
-                    Head = value;
-                    current = Head;         
-                }
-                else
-                {
-                    AddAfter(value);
-                }
-                current = Next;
+                Add(item);
             }
-            Current = Head;
         }
 
         public List<T?>? List()
@@ -70,7 +68,7 @@ namespace DataStructures
             return list;
         }
 
-        public void AddAfter(T? value)
+        public void AddLast(T? value)
         {   
             if (current?.Next is null)
             {
@@ -85,9 +83,49 @@ namespace DataStructures
             count++;
         }
 
-        public void AddAfter(Node<T>? node)
+        public void AddLast(Node<T>? node)
         {
-            AddAfter(node?.Data ?? default);
+            AddLast(node?.Data ?? default);
+        }
+
+        public void Add(T item)
+        {
+            AddLast(item);
+        }
+
+        public void Clear()
+        {
+            this.Head = new Node<T>(default);
+        }
+
+        public bool Contains(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(Array array, int index)
+        {
+            throw new NotImplementedException();
         }
     }
 }
