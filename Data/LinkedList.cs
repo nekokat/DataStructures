@@ -7,59 +7,87 @@ namespace DataStructures
 {
     public record LinkedList<T> where T: class
     {
-        Node<T> head;
-        Node<T> current;
-        int count;
+        Node<T>? head;
+        Node<T>? current;
+        protected int count;
 
-        public int Count {  get => count; private set => count = value; }
+        public int Count => count;
 
-        public Node<T> Current { get => current; private set => current = value; }
-        public Node<T> Head { get => head; private set => head = value; }
+        public Node<T>? Current { get => current; set => current = value; }
+        public Node<T>? Head { get => head; set => head = value; }
+        
+        public Node<T>? Next
+        {
+            get => current?.Next;
+            set => (current = new Node<T>(default)).Next = value;
+        }
 
-        public LinkedList(T data) 
+        public LinkedList() : this(default(T)){}
+
+
+        public LinkedList(T? data) 
         {
             if (head is default(T) || head is null)
             {
                 Head = new Node<T>(data);
                 Current = Head;
-                Count += 1;
             }
         }
 
-        public LinkedList() : this(default(T)){}
-        
-        public Node<T>? Next { get => current.Next; set => current.Next = value;}
-
-        public void AddAfter(T value)
+        public LinkedList(T[] data)
         {
-            if (Next is null)
+            Node<T>? value = default;
+
+            foreach (T item in data)
+            {
+                value = new(item);
+
+                if (head is null)
+                {
+                    Head = value;
+                    current = Head;         
+                }
+                else
+                {
+                    AddAfter(value);
+                }
+                current = Next;
+            }
+            Current = Head;
+        }
+
+        public List<T?>? List()
+        {
+            List<T?>? list = [];
+            Node<T>? current = Head;
+
+            do
+            {
+                list.Add(current?.Data);
+                current = Next;
+            } while (current?.Next is not null);
+
+            return list;
+        }
+
+        public void AddAfter(T? value)
+        {   
+            if (current?.Next is null)
             {
                 Next = new Node<T>(value);
             }
             else
             {
-                var newValue = new Node<T>(value)
-                {
-                    Next = this.Next
-                };
-
-                Next = newValue;
+                Node<T> newNode = new(value);
+                newNode.Next = current?.Next;
+                Next = newNode;
             }
-            Count += 1;
+            count++;
         }
 
-        public void AddAfter(Node<T> linkedList)
+        public void AddAfter(Node<T>? node)
         {
-            if (Next is null)
-            {
-                Next = linkedList;
-            }
-            else
-            {
-                linkedList.Next = Next;
-                Next = linkedList;
-            }
-            Count += 1;
+            AddAfter(node?.Data ?? default);
         }
     }
 }

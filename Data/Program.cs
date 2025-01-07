@@ -13,7 +13,9 @@ namespace DataStructures
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            
+            List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
+            DataStructures.LinkedList<string> linkedList = new(arr.ToArray());
+            System.Console.WriteLine(string.Join(", ", linkedList.List()));
         }
         
     }
