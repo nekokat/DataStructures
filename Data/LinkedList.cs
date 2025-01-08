@@ -17,6 +17,7 @@ namespace DataStructures
 
         public int Count => count;
 
+        public Node<T>? Last { get => last; set => last = value; }
         public Node<T>? Current { get => current; set => current = value; }
         public Node<T>? Head { get => head; set => head = value; }
         
@@ -64,22 +65,24 @@ namespace DataStructures
             {
                 Head = node;
                 Current = Head;
-                last = Head;
+                Last = Head;
 
             }
             else
             {
-                last!.Next = node;
-                last = node;
+                Last!.Next = node;
+                Last = node;
             }
             
-            list.Add(last.Data);
+            list.Add(Last.Data);
             count++;
         }
 
         public void Clear()
         {
             Head = null;
+            Current = null;
+            Last = null;
         }
 
         public bool Contains(T item)
