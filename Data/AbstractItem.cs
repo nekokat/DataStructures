@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public abstract record Item<T> : IData<T> where T : class
+    public abstract class Item<T> : IData<T> where T : class
     {
         public virtual T? Data {get; set;}
     }

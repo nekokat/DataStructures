@@ -6,7 +6,7 @@ using DataStructures;
 
 namespace DataStructures
 {
-    public record Node<T> : Item<T>, INext<T> where T : class
+    public class Node<T> : Item<T>, INext<T> where T : class
     {
         public Node(T? value)
         {

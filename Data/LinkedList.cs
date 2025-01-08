@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public record LinkedList<T> : ICollection<T>, ICollection where T: class
+    public class LinkedList<T> : ICollection<T>, ICollection where T: class
     {
         Node<T>? head;
         Node<T>? current;
+        Node<T>? last;
+
         protected int count;
+        List<T?> list = new();
 
         public int Count => count;
 
@@ -19,8 +22,8 @@ namespace DataStructures
         
         public Node<T>? Next
         {
-            get => current?.Next;
-            set => (current = new Node<T>(default)).Next = value;
+            get => Current?.Next;
+            set => Current!.Next = value;
         }
 
         public bool IsReadOnly => throw new NotImplementedException();
@@ -29,16 +32,13 @@ namespace DataStructures
 
         public object SyncRoot => throw new NotImplementedException();
 
-        public LinkedList() : this(default(T)){}
+        public LinkedList() : this(default(T )){}
 
 
         public LinkedList(T? data) 
         {
-            if (head is default(T) || head is null)
-            {
-                Head = new Node<T>(data);
-                Current = Head;
-            }
+            Head = new Node<T>(data);
+            Current = Head;
         }
 
         public LinkedList(T[] data)
@@ -46,7 +46,7 @@ namespace DataStructures
             Add(data);
         }
 
-        private void Add(T[] data)
+        private void Add(ICollection<T> data)
         {
             foreach (T item in data)
             {
@@ -54,48 +54,33 @@ namespace DataStructures
             }
         }
 
-        public List<T?>? List()
+        public List<T?> GetList => list;
+
+
+        public void AddLast(Node<T>? node)
         {
-            List<T?>? list = [];
-            Node<T>? current = Head;
 
-            do
-            {
-                list.Add(current?.Data);
-                current = Next;
-            } while (current?.Next is not null);
-
-            return list;
         }
 
-        public void AddLast(T? value)
+        public void Add(T item)
         {   
-            if (current?.Next is null)
+            if(Head == null)
             {
-                Next = new Node<T>(value);
+                Head = new Node<T>(item);
+                Current = Head;
+
             }
-            else
+            else if (Next == null)
             {
-                Node<T> newNode = new(value);
-                newNode.Next = current?.Next;
-                Next = newNode;
+                Node<T> node = new(item);
+                Current!.Next = node;
             }
             count++;
         }
 
-        public void AddLast(Node<T>? node)
-        {
-            AddLast(node?.Data ?? default);
-        }
-
-        public void Add(T item)
-        {
-            AddLast(item);
-        }
-
         public void Clear()
         {
-            this.Head = new Node<T>(default);
+            Head = null;
         }
 
         public bool Contains(T item)
@@ -118,7 +103,7 @@ namespace DataStructures
             throw new NotImplementedException();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
         }
