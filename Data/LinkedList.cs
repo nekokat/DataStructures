@@ -56,24 +56,22 @@ namespace DataStructures
 
         public List<T?> GetList => list;
 
-
-        public void AddLast(Node<T>? node)
-        {
-
-        }
-
         public void Add(T item)
         {   
             if(Head == null)
             {
                 Head = new Node<T>(item);
                 Current = Head;
+                last = Head;
+                list.Add(Head.Data);
 
             }
-            else if (Next == null)
+            else
             {
                 Node<T> node = new(item);
-                Current!.Next = node;
+                last!.Next = node;
+                last = node;
+                list.Add(last.Data);
             }
             count++;
         }

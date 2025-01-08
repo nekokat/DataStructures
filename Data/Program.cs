@@ -15,7 +15,7 @@ namespace DataStructures
         {
             List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
             DataStructures.LinkedList<string> linkedList = new(arr.ToArray());
-            System.Console.WriteLine(string.Join(", ", linkedList.List()));
+            Console.WriteLine(string.Join(", ", linkedList.GetList));
         }
         
     }
