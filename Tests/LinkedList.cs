@@ -17,12 +17,14 @@ public class LinkedListTests
     [Test]
     public void LinkedListAddDataTest()
     {
-        var value = new DataStructures.LinkedList<string>("One");
+        DataStructures.LinkedList<string> value = new("One");
+        Assert.That(value!.Head!.Data, Is.EqualTo("One"));
+        value.Clear();
         value.Add("Two");
-        Assert.That(value!.Next!.Data, Is.EqualTo("Two"));
+        Assert.That(value!.Head!.Data, Is.EqualTo("Two"));
         value!.Add("Three");
-        Assert.That(value?.Next?.Data, Is.EqualTo("Three"));
-        Assert.That(value?.Next?.Next?.Data, Is.EqualTo("Two"));
+        Assert.That(value!.Last!.Data, Is.EqualTo("Three"));
+        Assert.That(value!.Next!.Data, Is.EqualTo("Three"));
     }
 
     [Test]
