@@ -101,7 +101,7 @@ namespace DataStructures
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return list.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
