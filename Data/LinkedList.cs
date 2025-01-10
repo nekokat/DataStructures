@@ -8,22 +8,22 @@ namespace DataStructures
 {
     public class LinkedList<T> : ICollection<T>, ICollection where T: class
     {
-        Node<T>? head;
-        Node<T>? current;
-        Node<T>? last;
+        protected Node<T>? head;
+        protected Node<T>? current;
+        protected Node<T>? last;
 
         protected int count;
-        List<T?> list = new();
+        protected List<T?> list = new();
 
-        public int Count => count;
+        public int Count { get => count; private set => count = value; }
 
-        public Node<T>? Last { get => last; set => last = value; }
-        public Node<T>? Current { get => current; set => current = value; }
-        public Node<T>? Head { get => head; set => head = value; }
+        public Node<T>? Last { get => last; private set => last = value; }
+        public Node<T>? Current { get => current; private set => current = value; }
+        public Node<T>? Head { get => head; private set => head = value; }
         
         public Node<T>? Next
         {
-            get => Current?.Next;
+            get {Current = Current!.Next; return Current;}
             set => Current!.Next = value;
         }
 
@@ -33,21 +33,19 @@ namespace DataStructures
 
         public object SyncRoot => throw new NotImplementedException();
 
-        public LinkedList() : this(default(T )){}
+        public LinkedList() : this(default(T)){}
 
-
-        public LinkedList(T? data) 
-        {
-            Head = new Node<T>(data);
-            Current = Head;
-        }
-
-        public LinkedList(T[] data)
+        public LinkedList(ICollection<T> data)
         {
             Add(data);
         }
 
-        private void Add(ICollection<T> data)
+        public LinkedList(T? data) 
+        {
+            Add(data);            
+        }
+
+        public void Add(ICollection<T> data)
         {
             foreach (T item in data)
             {
@@ -83,6 +81,7 @@ namespace DataStructures
             Head = null;
             Current = null;
             Last = null;
+            Count -= Count;
         }
 
         public bool Contains(T item)

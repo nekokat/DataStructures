@@ -11,7 +11,7 @@ public class LinkedListTests
     public void LinkedListStringDataTest(string value)
     {
         DataStructures.LinkedList<string> linkedList = new(value);
-        Assert.That(linkedList?.Current?.Data, Is.EqualTo(value));
+        Assert.That(linkedList?.Current!.Data, Is.EqualTo(value));
     }
 
     [Test]
@@ -19,19 +19,44 @@ public class LinkedListTests
     {
         DataStructures.LinkedList<string> value = new("One");
         Assert.That(value!.Head!.Data, Is.EqualTo("One"));
-        value.Clear();
-        value.Add("Two");
-        Assert.That(value!.Head!.Data, Is.EqualTo("Two"));
+        value!.Add("Two");
+        Assert.That(value!.Next!.Data, Is.EqualTo("Two"));
         value!.Add("Three");
         Assert.That(value!.Last!.Data, Is.EqualTo("Three"));
-        Assert.That(value!.Next!.Data, Is.EqualTo("Three"));
+        Assert.That(value!.Current!.Next!.Data, Is.EqualTo("Three"));
     }
+
+    [Test]
+    public void LinkedListClearTest()
+    {
+        DataStructures.LinkedList<string> value = new("One");
+        value!.Add(new List<string>(){"Two", "Three"});
+        Assert.That(value!.Count, Is.EqualTo(3));
+        value.Clear();
+        Assert.That(value!.Count, Is.Default);
+        Assert.That(value!.Head, Is.Null);
+        Assert.That(value!.Current, Is.Null);
+        Assert.That(value!.Last, Is.Null);
+    }
+
+    [Test]
+    public void LinkedListCollectionTest()
+    {
+        List<string> list = new List<string>(){"Two", "Three"};
+        DataStructures.LinkedList<string> value = new(list);
+        Assert.That(value!.Count, Is.EqualTo(list.Count));
+        value.Clear();
+        Assert.That(value!.Head, Is.Null);
+        value.Add(list.ToArray());
+        Assert.That(value!.Count, Is.EqualTo(list.Count));
+    }
+
 
     [Test]
     public void LinkedListArrayTest()
     {
         List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
-        DataStructures.LinkedList<string> value = new(arr.ToArray());
+        DataStructures.LinkedList<string> value = new(arr);
         System.Console.WriteLine(string.Join(", ", value.GetList));
         Assert.That(value.GetList, Is.EqualTo(arr));
     }
