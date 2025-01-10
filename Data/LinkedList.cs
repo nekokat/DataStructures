@@ -24,7 +24,7 @@ namespace DataStructures
         public Node<T>? Next
         {
             get {Current = Current!.Next; return Current;}
-            set => Current!.Next = value;
+            private set => Current!.Next = value;
         }
 
         public bool IsReadOnly => throw new NotImplementedException();
@@ -40,7 +40,7 @@ namespace DataStructures
             Add(data);
         }
 
-        public LinkedList(T? data) 
+        public LinkedList(T data)
         {
             Add(data);            
         }
