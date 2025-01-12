@@ -11,7 +11,7 @@ public class LinkedListTests
     public void LinkedListStringDataTest(string value)
     {
         DataStructures.LinkedList<string> linkedList = new(value);
-        Assert.That(linkedList?.Current!.Data, Is.EqualTo(value));
+        Assert.That(linkedList!.Current!.Data, Is.EqualTo(value));
     }
 
     [Test]
@@ -77,7 +77,7 @@ public class LinkedListTests
     {
         List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
         DataStructures.LinkedList<string> value = new(arr);
-        
+
         Assert.That(value.Remove(5), Is.False);
         Assert.That(value.GetList(), Is.EqualTo(arr));
 

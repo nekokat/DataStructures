@@ -30,7 +30,7 @@ namespace DataStructures
 
         public bool IsSynchronized => throw new NotImplementedException();
 
-        public object SyncRoot => throw new NotImplementedException();
+        public object SyncRoot => this;
 
         public LinkedList() : this(default(T)){}
 
