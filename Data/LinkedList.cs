@@ -96,7 +96,21 @@ namespace DataStructures
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            int cnt = 0;
+            List<T> lst = new List<T>();
+            do
+            {
+                if(Current!.Next!.Data == item)
+                {
+                    Current!.Next = null;
+                    Last = Current;
+                    return true;
+                }
+                lst.Add(Current!.Data);
+                cnt++;
+            } while(Next != null);
+            Count = cnt;
+            return false;
         }
 
         public IEnumerator<T> GetEnumerator()
