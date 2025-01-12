@@ -105,6 +105,18 @@ namespace DataStructures
             throw new NotImplementedException();
         }
 
+        public bool Remove(int position)
+        {
+            if(position+3 > Count)
+            {
+                return false;
+            }
+
+            List<T> list = GetList()!;
+
+            return Remove(list[position]);
+        }   
+
         public bool Remove(T item)
         {
             int cnt = 0;
