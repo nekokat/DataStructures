@@ -57,7 +57,18 @@ public class LinkedListTests
     {
         List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
         DataStructures.LinkedList<string> value = new(arr);
-        System.Console.WriteLine(string.Join(", ", value.GetList));
-        Assert.That(value.GetList, Is.EqualTo(arr));
+        Assert.That(value.GetList(), Is.EqualTo(arr));
+    }
+
+    [Test]
+    public void LinkedListRemoveTest()
+    {
+        List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
+        DataStructures.LinkedList<string> value = new(arr);
+        value.Remove("Six");
+        Assert.That(value.GetList(), Is.EqualTo(arr));
+        value.Remove("Two");
+        Assert.That(value.Count, Is.EqualTo(1));
+        Assert.That(value.GetList(), Is.EqualTo([arr[0]]));
     }
 }

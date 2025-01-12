@@ -13,7 +13,6 @@ namespace DataStructures
         protected Node<T>? last;
 
         protected int count;
-        protected List<T?> list = new();
 
         public int Count { get => count; private set => count = value; }
 
@@ -42,7 +41,7 @@ namespace DataStructures
 
         public LinkedList(T data)
         {
-            Add(data);            
+            Add(data);
         }
 
         public void Add(ICollection<T> data)
@@ -53,7 +52,20 @@ namespace DataStructures
             }
         }
 
-        public List<T?> GetList => list;
+        public List<T?> GetList()
+        {
+            List<T?> lst = new();
+
+            while(Current! != null)
+            {
+                lst.Add(Current!.Data);
+                Current = Current!.Next;
+            }
+
+            Current = Head;
+
+            return lst;
+        }
 
         public void Add(T item)
         {   
@@ -72,8 +84,7 @@ namespace DataStructures
                 Last = node;
             }
             
-            list.Add(Last.Data);
-            count++;
+            Count++;
         }
 
         public void Clear()
@@ -86,7 +97,7 @@ namespace DataStructures
 
         public bool Contains(T item)
         {
-            return list.Contains(item);
+            return GetList().Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -97,25 +108,39 @@ namespace DataStructures
         public bool Remove(T item)
         {
             int cnt = 0;
-            List<T> lst = new List<T>();
-            do
+
+            if(!Contains(item))
             {
-                if(Current!.Next!.Data == item)
+                return false;
+            }
+
+            while(Current!.Next! != null)
+            {
+                if(Current.Data == item)
                 {
-                    Current!.Next = null;
-                    Last = Current;
-                    return true;
+                    Last!.Next = null;
+                    break;
                 }
-                lst.Add(Current!.Data);
-                cnt++;
-            } while(Next != null);
+                else{
+                    Last = Current;
+                    Current = Current!.Next;
+                    cnt++;
+                }
+
+                if(Count == cnt)
+                {
+                    return false;
+                }
+            }            
+
+            Current = Head;
             Count = cnt;
-            return false;
+            return true;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return list.GetEnumerator();
+            return GetList().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
