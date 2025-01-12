@@ -107,7 +107,7 @@ namespace DataStructures
 
         public bool Remove(int position)
         {
-            if(position+3 > Count)
+            if(position+1 > Count)
             {
                 return false;
             }
