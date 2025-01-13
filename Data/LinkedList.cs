@@ -44,6 +44,44 @@ namespace DataStructures
             Add(data);
         }
 
+        public void AddToTail(Node<T> node)
+        {
+            Last!.Next = node;
+            Last = Last!.Next;
+        }
+
+        public void AddToTail(T item)
+        {
+            Node<T> node = new Node<T>(item);
+            AddToTail(node);
+        }
+
+        public void AddToHead(T item)
+        {
+            Node<T> node = new Node<T>(item);
+             AddToHead(node);
+        }
+        
+        public void AddToHead(Node<T> node)
+        {
+            Node<T> tempNode = Head!;
+            Head = node;
+            Head.Next = tempNode;
+            Current = Head;
+        }
+
+        public void AddAfter(Node<T> node)
+        {
+            node.Next = Current!.Next;
+            Current!.Next = node;
+        }
+
+        public void AddAfter(T item)
+        {
+            Node<T> node = new Node<T>(item);
+            AddAfter(node);
+        }
+
         public void Add(ICollection<T> data)
         {
             foreach (T item in data)
