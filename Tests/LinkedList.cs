@@ -92,4 +92,20 @@ public class LinkedListTests
         Assert.That(value.Count, Is.EqualTo(val));
         Assert.That(value.GetList(), Is.EqualTo(arr.Take(val)));
     }
+
+    [Test]
+    public void LinkedListNextTest()
+    {
+        List<string> arr = new() { "One", "Two", "Three", "Four", "Five", "Six"};
+        DataStructures.LinkedList<string> value = new(arr);
+
+        int cnt = default;
+
+        while(value!.Next is not null)
+        {
+            cnt++;
+        }
+
+        Assert.That(cnt, Is.EqualTo(value.Count - 1));
+    }
 }
