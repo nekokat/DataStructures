@@ -23,7 +23,6 @@ namespace DataStructures
         public Node<T>? Next
         {
             get {Current = Current!.Next; return Current;}
-            private set => Current!.Next = value;
         }
 
         public bool IsReadOnly => throw new NotImplementedException();
@@ -31,8 +30,6 @@ namespace DataStructures
         public bool IsSynchronized => throw new NotImplementedException();
 
         public object SyncRoot => this;
-
-        public LinkedList() : this(default(T)){}
 
         public LinkedList(ICollection<T> data)
         {
@@ -130,7 +127,7 @@ namespace DataStructures
             Head = null;
             Current = null;
             Last = null;
-            Count -= Count;
+            Count = 0;
         }
 
         public bool Contains(T item)
@@ -158,6 +155,12 @@ namespace DataStructures
         public bool Remove(T item)
         {
             int cnt = 0;
+
+            if (item == Head!.Data)
+            {
+                Head = Head!.Next;
+                return true;
+            }
 
             if(!Contains(item))
             {

@@ -75,6 +75,7 @@ public class LinkedListTests
         Assert.That(value.GetList(), Is.EqualTo([arr[0]]));
     }
 
+    [TestCase(0)]
     [TestCase(1)]
     [TestCase(2)]
     [TestCase(3)]
