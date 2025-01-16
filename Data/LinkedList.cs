@@ -20,9 +20,9 @@ namespace DataStructures
         public Node<T>? Current { get => current; private set => current = value; }
         public Node<T>? Head { get => head; private set => head = value; }
         
-        public Node<T>? Next
+        public LinkedList<T> Next
         {
-            get {Current = Current!.Next; return Current;}
+            get {Current = Current!.Next; return this;}
         }
 
         public bool IsReadOnly => throw new NotImplementedException();
@@ -40,43 +40,39 @@ namespace DataStructures
         {
             Add(data);
         }
+        public void AddToEnd(T item)
+        {
+            Node<T> node = new(item);
+            AddToEnd(node);
+        }
 
         public void AddToEnd(Node<T> node)
         {
             Last!.Next = node;
             Last = Last!.Next;
         }
-
-        public void AddToEnd(T item)
-        {
-            Node<T> node = new Node<T>(item);
-            AddToEnd(node);
-        }
-
-        public void AddToHead(T item)
-        {
-            Node<T> node = new Node<T>(item);
-             AddToHead(node);
-        }
         
         public void AddToHead(Node<T> node)
         {
-            Node<T> tempNode = Head!;
-            Head = node;
-            Head.Next = tempNode;
-            Current = Head;
+            if (Head is null)
+            {   
+                Head = node;
+                Current = Head;
+                Last = Head;
+            }
+            else
+            {
+                Node<T> tempNode = Head!;
+                Head = node;
+                Head.Next = tempNode;
+                Current = Head;
+            }
         }
 
         public void AddAfter(Node<T> node)
         {
             node.Next = Current!.Next;
             Current!.Next = node;
-        }
-
-        public void AddAfter(T item)
-        {
-            Node<T> node = new Node<T>(item);
-            AddAfter(node);
         }
 
         public void Add(ICollection<T> data)
@@ -108,11 +104,11 @@ namespace DataStructures
 
             if(Head == null)
             {
-                Head = node;
+                AddToHead(node);
             }
             else
             {
-                AddToEnd(item);
+                AddToEnd(node);
             }
             Count++;
         }
@@ -147,18 +143,24 @@ namespace DataStructures
             return Remove(list[position]);
         }   
 
+        private bool RemoveHead()
+        {
+            Head = Head!.Next;
+            return true;
+        }
+
+        private bool RemoveEnd(Node<T> node)
+        {
+            Last = node;
+            return true;
+        }
+
         public bool Remove(T item)
         {
             int cnt = 0;
             if (item == Head!.Data)
             {
-                Head = Head!.Next;
-                return true;
-            }
-
-            if(!Contains(item))
-            {
-                return false;
+                return RemoveHead();
             }
 
             while(Current!.Next! != null)
@@ -173,13 +175,8 @@ namespace DataStructures
                     Last = Current;
                     Current = Current!.Next;
                 }
-
-                if(Count == cnt)
-                {
-                    return false;
-                }
             }
-            Count -= Count == cnt ? 0 : 1;    
+            
             return true;
         }
 

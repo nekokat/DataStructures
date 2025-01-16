@@ -19,9 +19,9 @@ public class LinkedListTests
     {
         DataStructures.LinkedList<string> value = new("One");
         Assert.That(value!.Head!.Data, Is.EqualTo("One"));
-        value!.Add("Two");
-        Assert.That(value!.Next!.Data, Is.EqualTo("Two"));
-        value!.Add("Three");
+        value!.AddToEnd("Two");
+        Assert.That(value!.Next!.Current!.Data, Is.EqualTo("Two"));
+        value!.AddToEnd("Three");
         Assert.That(value!.Last!.Data, Is.EqualTo("Three"));
         Assert.That(value!.Current!.Next!.Data, Is.EqualTo("Three"));
     }
@@ -115,8 +115,20 @@ public class LinkedListTests
         List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
         DataStructures.LinkedList<string> value = new(arr);
         string val = "Six";
-        value.AddToEnd(val);
+        value.AddToEnd(new Node<string>(val));
         arr.Add(val);
         Assert.That(value.GetList, Is.EqualTo(arr));
+    }
+
+    [Test]
+    public void LinkedlistAddAfterTest()
+    {
+        List<string> arr = new() { "One", "Two", "Four", "Five"};
+        DataStructures.LinkedList<string> value = new(arr);
+        string val = "Three";
+        value.Next.AddAfter(new Node<string>(val));
+        arr.Insert(3, val);
+        //Assert.Pass(string.Join(", ", arr));
+        Assert.Pass(string.Join(", ", value!.GetList()));
     }
 }
