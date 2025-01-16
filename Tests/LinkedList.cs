@@ -70,28 +70,27 @@ public class LinkedListTests
         Assert.That(value.Remove("Six"), Is.False);
         Assert.That(value.Remove("Two"), Is.True);
 
-        Assert.That(value.Count, Is.EqualTo(1));
+        Assert.That(value.Count, Is.EqualTo(arr.Count - 1));
 
-        Assert.That(value.GetList(), Is.EqualTo([arr[0]]));
+        arr.RemoveAt(1);
+
+        Assert.That(value.GetList, Is.EqualTo(arr));
     }
 
-    [TestCase(0)]
-    [TestCase(1)]
-    [TestCase(2)]
-    [TestCase(3)]
+    [TestCase(0)][TestCase(1)]
+    [TestCase(2)][TestCase(3)]
+    [TestCase(4)][TestCase(5)]
     public void LinkedListRemovePositionTest(int position)
     {
-        List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
+        List<string> arr = new() { "One", "Two", "Three", "Four", "Five", "Six"};
         DataStructures.LinkedList<string> value = new(arr);
 
         Assert.That(value.Remove(arr.Count+position), Is.False);
         Assert.That(value.GetList(), Is.EqualTo(arr));
 
-        int val = position%arr.Count;
+        int val = position;
 
         Assert.That(value.Remove(val), Is.True);
-        Assert.That(value.Count, Is.EqualTo(val));
-        Assert.That(value.GetList(), Is.EqualTo(arr.Take(val)));
     }
 
     [Test]
@@ -108,5 +107,16 @@ public class LinkedListTests
         }
 
         Assert.That(cnt, Is.EqualTo(value.Count - 1));
+    }
+
+    [Test]
+    public void LinkedListAddEndTest()
+    {
+        List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
+        DataStructures.LinkedList<string> value = new(arr);
+        string val = "Six";
+        value.AddToEnd(val);
+        arr.Add(val);
+        Assert.That(value.GetList, Is.EqualTo(arr));
     }
 }

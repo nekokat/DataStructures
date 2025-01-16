@@ -41,16 +41,16 @@ namespace DataStructures
             Add(data);
         }
 
-        public void AddToTail(Node<T> node)
+        public void AddToEnd(Node<T> node)
         {
             Last!.Next = node;
             Last = Last!.Next;
         }
 
-        public void AddToTail(T item)
+        public void AddToEnd(T item)
         {
             Node<T> node = new Node<T>(item);
-            AddToTail(node);
+            AddToEnd(node);
         }
 
         public void AddToHead(T item)
@@ -109,16 +109,11 @@ namespace DataStructures
             if(Head == null)
             {
                 Head = node;
-                Current = Head;
-                Last = Head;
-
             }
             else
             {
-                Last!.Next = node;
-                Last = node;
+                AddToEnd(item);
             }
-            
             Count++;
         }
 
@@ -155,7 +150,6 @@ namespace DataStructures
         public bool Remove(T item)
         {
             int cnt = 0;
-
             if (item == Head!.Data)
             {
                 Head = Head!.Next;
@@ -169,6 +163,7 @@ namespace DataStructures
 
             while(Current!.Next! != null)
             {
+                cnt++;
                 if(Current.Data == item)
                 {
                     Last!.Next = null;
@@ -177,17 +172,14 @@ namespace DataStructures
                 else{
                     Last = Current;
                     Current = Current!.Next;
-                    cnt++;
                 }
 
                 if(Count == cnt)
                 {
                     return false;
                 }
-            }            
-
-            Current = Head;
-            Count = cnt;
+            }
+            Count -= Count == cnt ? 0 : 1;    
             return true;
         }
 
