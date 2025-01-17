@@ -6,7 +6,7 @@ namespace Tests;
 public class LinkedListTests
 {
     DataStructures.LinkedList<string> Value { get; set; }
-    List<string>? ValueData { get; set; }
+    static List<string>? ValueData { get; set; }
 
     [SetUp]
     public void SetUp()
@@ -61,12 +61,35 @@ public class LinkedListTests
         Assert.That(Value.Count, Is.EqualTo(list.Count));
     }
 
+    [Test]
+    public void LinkedListCurrentDataTest()
+    {
+        foreach(string value in ValueData!.Skip(1)){
+            Assert.That(Value.Next.Data, Is.EqualTo(value));
+        }
+    }
+
+    [Test]
+    public void LinkedlistContainsTest()
+    {
+        foreach (string value in ValueData!){
+            Assert.That(Value.Contains(value), Is.True);
+        }
+    }
+
+    [TestCase("Zero")]
+    [TestCase("One")]
+    [TestCase("Two")]
+    public void LinkedListAddToHeadTest(string value)
+    {
+        Node<string> node = new (value);
+        Value.AddToHead(node);
+        Assert.That(Value.Head!.Data, Is.EqualTo(value));
+    }
 
     [Test]
     public void LinkedListToListTest()
     {  
-        Assert.Pass("GetList: " + string.Join(", ", Value.GetList()));
-        Assert.Pass("ValueData: " + string.Join(", ", ValueData)); 
         Assert.That(Value.GetList, Is.EqualTo(ValueData));
     }
 

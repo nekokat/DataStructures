@@ -146,12 +146,6 @@ namespace DataStructures
             return true;
         }
 
-        private bool RemoveEnd(Node<T> node)
-        {
-            Last = node;
-            return true;
-        }
-
         public bool Remove(T item)
         {
             Node<T> current = Head;
