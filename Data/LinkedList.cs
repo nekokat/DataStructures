@@ -19,6 +19,8 @@ namespace DataStructures
         public Node<T>? Last { get => last; private set => last = value; }
         public Node<T>? Current { get => current; private set => current = value; }
         public Node<T>? Head { get => head; private set => head = value; }
+
+        public T Data => Current!.Data!;
         
         public LinkedList<T> Next
         {
@@ -133,14 +135,9 @@ namespace DataStructures
 
         public bool Remove(int position)
         {
-            if(position+1 > Count)
-            {
-                return false;
-            }
-
             List<T> list = GetList()!;
 
-            return Remove(list[position]);
+            return Remove(list!.ElementAtOrDefault(position)!);
         }   
 
         private bool RemoveHead()
@@ -157,37 +154,40 @@ namespace DataStructures
 
         public bool Remove(T item)
         {
-            int cnt = 0;
+            Node<T> current = Head;
+            Node<T> last = Head;
+
             if (item == Head!.Data)
             {
+                Count--;
                 return RemoveHead();
             }
 
-            while(Current!.Next! != null)
+            while(current!.Next! != null)
             {
-                cnt++;
-                if(Current.Data == item)
+                if(current!.Data != item)
                 {
-                    Last!.Next = null;
-                    break;
+                    current = current.Next;
                 }
-                else{
-                    Last = Current;
-                    Current = Current!.Next;
+                else
+                {
+                    Count--;
+                    last!.Next = current!.Next;                    
+                    return true;
                 }
             }
             
-            return true;
+            return false;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return GetList().GetEnumerator();
+            throw new NotImplementedException();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
 
         public void CopyTo(Array array, int index)

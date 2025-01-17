@@ -20,23 +20,25 @@ public class LinkedListTests
         DataStructures.LinkedList<string> value = new("One");
         Assert.That(value!.Head!.Data, Is.EqualTo("One"));
         value!.AddToEnd("Two");
-        Assert.That(value!.Next!.Current!.Data, Is.EqualTo("Two"));
+        Assert.That(value!.Next.Current!.Data, Is.EqualTo("Two"));
         value!.AddToEnd("Three");
-        Assert.That(value!.Last!.Data, Is.EqualTo("Three"));
-        Assert.That(value!.Current!.Next!.Data, Is.EqualTo("Three"));
+        Assert.That(value!.Next!.Current.Data, Is.EqualTo("Three"));
     }
 
     [Test]
     public void LinkedListClearTest()
     {
-        DataStructures.LinkedList<string> value = new("One");
-        value!.Add(new List<string>(){"Two", "Three"});
-        Assert.That(value!.Count, Is.EqualTo(3));
+        List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
+        DataStructures.LinkedList<string> value = new(arr);
+        Assert.That(value!.Count, Is.EqualTo(arr.Count));
+
         value.Clear();
-        Assert.That(value!.Count, Is.Default);
-        Assert.That(value!.Head, Is.Null);
-        Assert.That(value!.Current, Is.Null);
-        Assert.That(value!.Last, Is.Null);
+
+        Assert.That(value.Count, Is.Default);
+        
+        Assert.That(value.Head, Is.Null);
+        Assert.That(value.Current, Is.Null);
+        Assert.That(value.Last, Is.Null);
     }
 
     [Test]
@@ -82,15 +84,15 @@ public class LinkedListTests
     [TestCase(4)][TestCase(5)]
     public void LinkedListRemovePositionTest(int position)
     {
-        List<string> arr = new() { "One", "Two", "Three", "Four", "Five", "Six"};
+        List<string> arr = new() { "One", "Two", "Three", "Four", "Five", "Six", "Seven"};
         DataStructures.LinkedList<string> value = new(arr);
 
         Assert.That(value.Remove(arr.Count+position), Is.False);
         Assert.That(value.GetList(), Is.EqualTo(arr));
 
         int val = position;
-
         Assert.That(value.Remove(val), Is.True);
+        Assert.Pass(position.ToString() + "\n" + string.Join(", ", value.GetList()) + "\n\n");
     }
 
     [Test]
@@ -101,7 +103,7 @@ public class LinkedListTests
 
         int cnt = default;
 
-        while(value!.Next is not null)
+        while(value!.Next.Current is not null)
         {
             cnt++;
         }
