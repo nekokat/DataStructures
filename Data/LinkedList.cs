@@ -148,8 +148,8 @@ namespace DataStructures
 
         public bool Remove(T item)
         {
-            Node<T> current = Head;
-            Node<T> last = Head;
+            Node<T> current = Head!;
+            Node<T> last = Head!;
 
             if (item == Head!.Data)
             {
