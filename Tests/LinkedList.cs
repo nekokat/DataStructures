@@ -1,9 +1,19 @@
 using DataStructures;
+using System.Linq;
 
 namespace Tests;
 
 public class LinkedListTests
 {
+    DataStructures.LinkedList<string> Value { get; set; }
+    List<string>? ValueData { get; set; }
+
+    [SetUp]
+    public void SetUp()
+    {
+        ValueData = new() { "One", "Two", "Three", "Four", "Five"};
+        Value = new(ValueData);
+    }
 
     [TestCase("One")]
     [TestCase("Two")]
@@ -28,109 +38,97 @@ public class LinkedListTests
     [Test]
     public void LinkedListClearTest()
     {
-        List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
-        DataStructures.LinkedList<string> value = new(arr);
-        Assert.That(value!.Count, Is.EqualTo(arr.Count));
+        Assert.That(Value!.Count, Is.EqualTo(Value.Count));
 
-        value.Clear();
+        Value.Clear();
 
-        Assert.That(value.Count, Is.Default);
+        Assert.That(Value.Count, Is.Default);
         
-        Assert.That(value.Head, Is.Null);
-        Assert.That(value.Current, Is.Null);
-        Assert.That(value.Last, Is.Null);
+        Assert.That(Value.Head, Is.Null);
+        Assert.That(Value.Current, Is.Null);
+        Assert.That(Value.Last, Is.Null);
     }
 
     [Test]
     public void LinkedListCollectionTest()
     {
         List<string> list = new List<string>(){"Two", "Three"};
-        DataStructures.LinkedList<string> value = new(list);
-        Assert.That(value!.Count, Is.EqualTo(list.Count));
-        value.Clear();
-        Assert.That(value!.Head, Is.Null);
-        value.Add(list.ToArray());
-        Assert.That(value!.Count, Is.EqualTo(list.Count));
+        DataStructures.LinkedList<string> val = new(list);
+        Assert.That(Value.Count, Is.Not.Default);
+        Value.Clear();
+        Assert.That(Value!.Head, Is.Null);
+        Value.Add(list.ToArray());
+        Assert.That(Value.Count, Is.EqualTo(list.Count));
     }
 
 
     [Test]
-    public void LinkedListArrayTest()
-    {
-        List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
-        DataStructures.LinkedList<string> value = new(arr);
-        Assert.That(value.GetList(), Is.EqualTo(arr));
+    public void LinkedListToListTest()
+    {  
+        Assert.Pass("GetList: " + string.Join(", ", Value.GetList()));
+        Assert.Pass("ValueData: " + string.Join(", ", ValueData)); 
+        Assert.That(Value.GetList, Is.EqualTo(ValueData));
     }
 
     [Test]
     public void LinkedListRemoveItemTest()
     {
+        Assert.That(Value.Remove("Six"), Is.False);
+        Assert.That(Value.Remove("Two"), Is.True);
         
-        List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
-        DataStructures.LinkedList<string> value = new(arr);
+        ValueData!.RemoveAt(1);
 
-        Assert.That(value.Remove("Six"), Is.False);
-        Assert.That(value.Remove("Two"), Is.True);
-
-        Assert.That(value.Count, Is.EqualTo(arr.Count - 1));
-
-        arr.RemoveAt(1);
-
-        Assert.That(value.GetList, Is.EqualTo(arr));
+        Assert.That(Value.Count, Is.EqualTo(ValueData.Count));
+        Assert.That(Value.GetList(), Is.EqualTo(ValueData));
     }
 
-    [TestCase(0)][TestCase(1)]
-    [TestCase(2)][TestCase(3)]
-    [TestCase(4)][TestCase(5)]
+    private static IEnumerable<int> RemovePositionData()
+    {
+        foreach(int i in Enumerable.Range(0, 4))
+        {
+            yield return i;
+        }
+    }
+
+    [TestCaseSource(nameof(RemovePositionData))]
     public void LinkedListRemovePositionTest(int position)
     {
-        List<string> arr = new() { "One", "Two", "Three", "Four", "Five", "Six", "Seven"};
-        DataStructures.LinkedList<string> value = new(arr);
-
-        Assert.That(value.Remove(arr.Count+position), Is.False);
-        Assert.That(value.GetList(), Is.EqualTo(arr));
-
-        int val = position;
-        Assert.That(value.Remove(val), Is.True);
-        Assert.Pass(position.ToString() + "\n" + string.Join(", ", value.GetList()) + "\n\n");
+        Assert.That(Value.GetList(), Is.EqualTo(ValueData));
+        Assert.That(Value.Remove(position), Is.True);
     }
 
     [Test]
     public void LinkedListNextTest()
     {
-        List<string> arr = new() { "One", "Two", "Three", "Four", "Five", "Six"};
-        DataStructures.LinkedList<string> value = new(arr);
-
         int cnt = default;
 
-        while(value!.Next.Current is not null)
+        while(Value.Next.Current is not null)
         {
             cnt++;
         }
 
-        Assert.That(cnt, Is.EqualTo(value.Count - 1));
+        Assert.That(cnt, Is.EqualTo(Value.Count - 1));
     }
 
-    [Test]
-    public void LinkedListAddEndTest()
+    [TestCase("Six")]
+    public void LinkedListAddEndTest(string val)
     {
-        List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
-        DataStructures.LinkedList<string> value = new(arr);
-        string val = "Six";
-        value.AddToEnd(new Node<string>(val));
-        arr.Add(val);
-        Assert.That(value.GetList, Is.EqualTo(arr));
+        Value.AddToEnd(new Node<string>(val));
+        ValueData!.Add(val);
+        Assert.That(Value.GetList, Is.EqualTo(ValueData));
     }
 
-    [Test]
-    public void LinkedlistAddAfterTest()
+    [TestCase("Zero", 0)]
+    [TestCase("NewOne", 1)]
+    [TestCase("NewTwo", 2)]
+    [TestCase("NewThree", 3)]
+    public void LinkedlistAddAfterTest(string value, int position)
     {
-        List<string> arr = new() { "One", "Two", "Four", "Five"};
-        DataStructures.LinkedList<string> value = new(arr);
-        string val = "Three";
-        value.Next.AddAfter(new Node<string>(val));
-        arr.Insert(3, val);
-        //Assert.Pass(string.Join(", ", arr));
-        Assert.Pass(string.Join(", ", value!.GetList()));
+        Enumerable.Range(0, position).ToList().ForEach(x => Value.Next.Cast<string>());
+
+        Value.AddAfter(new Node<string>(value));
+        ValueData!.Insert(position+1, value);
+
+        Assert.That(Value.GetList(), Is.EqualTo(ValueData));
     }
 }

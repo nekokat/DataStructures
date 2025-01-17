@@ -89,13 +89,13 @@ namespace DataStructures
         {
             List<T?> lst = new();
 
-            while(Current! != null)
-            {
-                lst.Add(Current!.Data);
-                Current = Current!.Next;
-            }
+            Node<T> current = Head!;
 
-            Current = Head;
+            while(current! != null)
+            {
+                lst.Add(current!.Data);
+                current = current!.Next!;
+            }
 
             return lst;
         }
