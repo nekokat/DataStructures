@@ -147,10 +147,10 @@ public class LinkedListTests
     [TestCase("NewThree", 3)]
     public void LinkedlistAddAfterTest(string value, int position)
     {
-        Enumerable.Range(0, position).ToList().ForEach(x => Value.Next.Cast<string>());
+        Enumerable.Range(default, position).ToList().ForEach(x => Value.Next.Cast<string>());
 
         Value.AddAfter(new Node<string>(value));
-        ValueData!.Insert(position+1, value);
+        ValueData!.Insert(++position, value);
 
         Assert.That(Value.GetList(), Is.EqualTo(ValueData));
     }

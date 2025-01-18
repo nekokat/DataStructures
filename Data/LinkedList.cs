@@ -27,11 +27,14 @@ namespace DataStructures
             get {Current = Current!.Next; return this;}
         }
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        protected bool IsReadOnly { get { return false; }
+        }
 
-        public bool IsSynchronized => throw new NotImplementedException();
+        public bool IsSynchronized { get { return false; } }
 
         public object SyncRoot => this;
+
+        bool ICollection<T>.IsReadOnly => IsReadOnly;
 
         public LinkedList(ICollection<T> data)
         {
