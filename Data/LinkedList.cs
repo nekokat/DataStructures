@@ -37,7 +37,13 @@ namespace DataStructures
             }
         }
 
-        public bool IsSynchronized { get { return false; } }
+        public bool IsSynchronized
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         public object SyncRoot => this;
 
