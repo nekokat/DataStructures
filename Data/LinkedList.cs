@@ -29,7 +29,12 @@ namespace DataStructures
             get {Current = Current!.Next; return this;}
         }
 
-        protected bool IsReadOnly { get { return false; }
+        protected bool IsReadOnly
+        {
+            get
+            {
+                return false;
+            }
         }
 
         public bool IsSynchronized { get { return false; } }
@@ -42,7 +47,11 @@ namespace DataStructures
 
         public LinkedList(T data) : this(data, false) {}
 
-        public LinkedList(T data, bool isCircular) :this([data], isCircular) {}
+        public LinkedList(T data, bool isCircular)
+        {
+            Add(data);
+            SetIsCircular(isCircular);
+        }
 
         public LinkedList(ICollection<T> data, bool isCircular) 
         {
@@ -99,7 +108,6 @@ namespace DataStructures
             {
                 Add(item);
             }
-            SetIsCircular(IsCircular);
         }
 
         public List<T?> GetList()
