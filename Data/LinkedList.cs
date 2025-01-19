@@ -20,7 +20,7 @@ namespace DataStructures
         public Node<T>? Current { get => current; private set => current = value; }
         public Node<T>? Head { get => head; private set => head = value; }
 
-        public bool IsCircular {get { return Last!.Next == Head;}}
+        public bool IsCircular { get; private set;}
 
         public T Data => Current!.Data!;
         
@@ -49,6 +49,12 @@ namespace DataStructures
 
         bool ICollection<T>.IsReadOnly => IsReadOnly;
 
+        bool ICircular<T>.IsCircular
+        {
+            get => IsCircular;
+            set => IsCircular = value;
+        }
+
         public LinkedList(ICollection<T> data) : this(data, false) {}
 
         public LinkedList(T data) : this(data, false) {}
@@ -56,13 +62,13 @@ namespace DataStructures
         public LinkedList(T data, bool isCircular)
         {
             Add(data);
-            SetIsCircular(isCircular);
+            IsCircular = isCircular;            
         }
 
         public LinkedList(ICollection<T> data, bool isCircular) 
         {
             Add(data);
-            SetIsCircular(isCircular);
+            IsCircular = isCircular;
         }
 
         public void AddToEnd(T item)
@@ -75,6 +81,8 @@ namespace DataStructures
         {            
             Last!.Next = node;
             Last = Last!.Next;
+
+            SetIsCircular(IsCircular);
         }
 
         private void SetIsCircular(bool isCircular)
@@ -100,10 +108,32 @@ namespace DataStructures
                 Head.Next = tempNode;
                 Current = Head;
             }
+
+            SetIsCircular(IsCircular);
+        }
+
+
+        public void GoTo(T item)
+        {
+            Node<T> node = new(item);
+            GoTo(node);
+        }
+
+        public void GoTo(Node<T> node)
+        {            
+            while (Current!.Data != node.Data)
+            {
+                Next.AsParallel<T>();
+            }
         }
 
         public void AddAfter(Node<T> node)
         {
+            if (Current == Last)
+            {
+                AddToEnd(node);
+            }
+
             node.Next = Current!.Next;
             Current!.Next = node;
         }
@@ -116,7 +146,7 @@ namespace DataStructures
             }
         }
 
-        public List<T?> GetList()
+        public List<T?> AsList()
         {
             List<T?> lst = new();
 
@@ -156,7 +186,7 @@ namespace DataStructures
 
         public bool Contains(T item)
         {
-            return GetList().Contains(item);
+            return AsList().Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -166,7 +196,7 @@ namespace DataStructures
 
         public bool Remove(int position)
         {
-            List<T> list = GetList()!;
+            List<T> list = AsList()!;
 
             return Remove(list!.ElementAtOrDefault(position)!);
         }   

@@ -92,7 +92,7 @@ public class LinkedListTests
     [Test]
     public void LinkedListToListTest()
     {  
-        Assert.That(Value.GetList, Is.EqualTo(ValueData));
+        Assert.That(Value.AsList, Is.EqualTo(ValueData));
     }
 
     [Test]
@@ -104,7 +104,7 @@ public class LinkedListTests
         ValueData!.RemoveAt(1);
 
         Assert.That(Value.Count, Is.EqualTo(ValueData.Count));
-        Assert.That(Value.GetList(), Is.EqualTo(ValueData));
+        Assert.That(Value.AsList(), Is.EqualTo(ValueData));
     }
 
     private static IEnumerable<int> RemovePositionData()
@@ -118,7 +118,7 @@ public class LinkedListTests
     [TestCaseSource(nameof(RemovePositionData))]
     public void LinkedListRemovePositionTest(int position)
     {
-        Assert.That(Value.GetList(), Is.EqualTo(ValueData));
+        Assert.That(Value.AsList(), Is.EqualTo(ValueData));
         Assert.That(Value.Remove(position), Is.True);
     }
 
@@ -140,7 +140,7 @@ public class LinkedListTests
     {
         Value.AddToEnd(new Node<string>(val));
         ValueData!.Add(val);
-        Assert.That(Value.GetList, Is.EqualTo(ValueData));
+        Assert.That(Value.AsList, Is.EqualTo(ValueData));
     }
 
     [TestCase("Zero", 0)]
@@ -154,7 +154,7 @@ public class LinkedListTests
         Value.AddAfter(new Node<string>(value));
         ValueData!.Insert(++position, value);
 
-        Assert.That(Value.GetList(), Is.EqualTo(ValueData));
+        Assert.That(Value.AsList(), Is.EqualTo(ValueData));
     }
 
     [Test]
