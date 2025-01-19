@@ -16,9 +16,9 @@ namespace DataStructures
         {
             List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
             DataStructures.LinkedList<string> value = new(arr);
+            DataStructures.LinkedList<string> circularValue = new(arr, true);
             System.Console.WriteLine(value.IsCircular);
-            value.Last!.Next = value.Head;
-            System.Console.WriteLine(value.IsCircular);
+            System.Console.WriteLine(circularValue.IsCircular);
         }
         
     }

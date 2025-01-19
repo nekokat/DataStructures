@@ -6,7 +6,7 @@ using DataStructures;
 
 namespace DataStructures
 {
-    public class Node<T> : Item<T>, INext<T>, IEquatable<Node<T>>  where T : class
+    public class Node<T> : Item<T>, INext<T>  where T : class
     {
         public Node(T? value)
         {
@@ -14,10 +14,5 @@ namespace DataStructures
         }
 
         public Node<T>? Next { get; set; }
-
-        public bool Equals(Node<T>? other)
-        {
-            return this.Data == other?.Data && this.Next == other?.Next;
-        }
     }
 }

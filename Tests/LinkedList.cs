@@ -7,12 +7,14 @@ public class LinkedListTests
 {
     DataStructures.LinkedList<string> Value { get; set; }
     static List<string>? ValueData { get; set; }
+    DataStructures.LinkedList<string> CircularValue { get; set; }
 
     [SetUp]
     public void SetUp()
     {
         ValueData = new() { "One", "Two", "Three", "Four", "Five"};
         Value = new(ValueData);
+        CircularValue = new(ValueData, true);
     }
 
     [TestCase("One")]
@@ -159,7 +161,6 @@ public class LinkedListTests
     public void LinkedListIsCircularTest()
     {
         Assert.That(Value.IsCircular, Is.False);
-        Value.Last!.Next = Value.Head;
-        Assert.That(Value.IsCircular, Is.True);
+        Assert.That(CircularValue.IsCircular, Is.True);
     }
 }

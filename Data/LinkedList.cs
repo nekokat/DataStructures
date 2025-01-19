@@ -38,15 +38,18 @@ namespace DataStructures
 
         bool ICollection<T>.IsReadOnly => IsReadOnly;
 
-        public LinkedList(ICollection<T> data)
+        public LinkedList(ICollection<T> data) : this(data, false) {}
+
+        public LinkedList(T data) : this(data, false) {}
+
+        public LinkedList(T data, bool isCircular) :this([data], isCircular) {}
+
+        public LinkedList(ICollection<T> data, bool isCircular) 
         {
             Add(data);
+            SetIsCircular(isCircular);
         }
 
-        public LinkedList(T data)
-        {
-            Add(data);
-        }
         public void AddToEnd(T item)
         {
             Node<T> node = new(item);
@@ -54,9 +57,17 @@ namespace DataStructures
         }
 
         public void AddToEnd(Node<T> node)
-        {
+        {            
             Last!.Next = node;
             Last = Last!.Next;
+        }
+
+        private void SetIsCircular(bool isCircular)
+        {
+            if(isCircular)
+            {
+                Last!.Next = Head;
+            }
         }
         
         public void AddToHead(Node<T> node)
@@ -88,6 +99,7 @@ namespace DataStructures
             {
                 Add(item);
             }
+            SetIsCircular(IsCircular);
         }
 
         public List<T?> GetList()
