@@ -154,4 +154,12 @@ public class LinkedListTests
 
         Assert.That(Value.GetList(), Is.EqualTo(ValueData));
     }
+
+    [Test]
+    public void LinkedListIsCircularTest()
+    {
+        Assert.That(Value.IsCircular, Is.False);
+        Value.Last!.Next = Value.Head;
+        Assert.That(Value.IsCircular, Is.True);
+    }
 }

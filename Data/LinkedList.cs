@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public class LinkedList<T> : ICollection<T>, ICollection where T: class
+    public class LinkedList<T> : ICircular<T>, ICollection<T>, ICollection where T: class
     {
         protected Node<T>? head;
         protected Node<T>? current;
@@ -19,6 +19,8 @@ namespace DataStructures
         public Node<T>? Last { get => last; private set => last = value; }
         public Node<T>? Current { get => current; private set => current = value; }
         public Node<T>? Head { get => head; private set => head = value; }
+
+        public bool IsCircular {get { return Last!.Next == Head;}}
 
         public T Data => Current!.Data!;
         

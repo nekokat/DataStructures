@@ -16,12 +16,9 @@ namespace DataStructures
         {
             List<string> arr = new() { "One", "Two", "Three", "Four", "Five"};
             DataStructures.LinkedList<string> value = new(arr);
-            value.Remove("Six");
-            System.Console.WriteLine(string.Join(", ", value.GetList()));
-            value.Remove("Two");
-            arr.Remove("Two");
-            System.Console.WriteLine(value.Count == arr.Count);
-            System.Console.WriteLine(string.Join(", ", value.GetList()));
+            System.Console.WriteLine(value.IsCircular);
+            value.Last!.Next = value.Head;
+            System.Console.WriteLine(value.IsCircular);
         }
         
     }
