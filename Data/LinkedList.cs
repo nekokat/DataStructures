@@ -29,6 +29,11 @@ namespace DataStructures
             get {Current = Current!.Next; return this;}
         }
 
+        public LinkedList<T> Previous
+        {
+            get {Current = Current!.Previous; return this;}
+        }
+
         protected bool IsReadOnly
         {
             get

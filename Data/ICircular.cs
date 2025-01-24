@@ -7,6 +7,6 @@ namespace DataStructures
 {
     public interface ICircular<T> where T : class
     {
-        public bool IsCircular { get ; set;}
+        public bool IsCircular { get; set;}
     }
 }

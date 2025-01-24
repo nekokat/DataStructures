@@ -6,7 +6,7 @@ using DataStructures;
 
 namespace DataStructures
 {
-    public class Node<T> : Item<T>, INext<T>  where T : class
+    public class Node<T> : Item<T>, INext<T>, IPrev<T>  where T : class
     {
         public Node(T? value)
         {
@@ -14,5 +14,7 @@ namespace DataStructures
         }
 
         public Node<T>? Next { get; set; }
+
+        public Node<T>? Previous { get; set; }
     }
 }
