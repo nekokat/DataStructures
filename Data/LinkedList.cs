@@ -98,7 +98,7 @@ namespace DataStructures
             if (Head is null)
             {   
                 Head = node;
-                Current = Head;
+                Reset();
                 Last = Head;
             }
             else
@@ -106,25 +106,10 @@ namespace DataStructures
                 Node<T> tempNode = Head!;
                 Head = node;
                 Head.Next = tempNode;
-                Current = Head;
+                Reset();
             }
 
             SetIsCircular(IsCircular);
-        }
-
-
-        public void GoTo(T item)
-        {
-            Node<T> node = new(item);
-            GoTo(node);
-        }
-
-        public void GoTo(Node<T> node)
-        {            
-            while (Current!.Data != node.Data)
-            {
-                Next.AsParallel<T>();
-            }
         }
 
         public void AddAfter(Node<T> node)
@@ -237,7 +222,7 @@ namespace DataStructures
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new LinkedListEnumerator<T>(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -248,6 +233,11 @@ namespace DataStructures
         public void CopyTo(Array array, int index)
         {
             throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            Current = Head;
         }
     }
 }
