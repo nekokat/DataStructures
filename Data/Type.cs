@@ -1,6 +1,6 @@
-namespace Data
+namespace DataStructures
 {
-    public enum TypeLinkedList
+    public enum LinkedListType 
     {
         Singly,// List nodes contains, one link to Next a value
         Doubly,// List nodes contains, besides the next-node link, a second link field pointing to the 'previous' node in the sequence
