@@ -12,6 +12,9 @@ namespace DataStructures
         protected Node<T>? current;
         protected Node<T>? last;
 
+        protected LinkedListType type;
+
+        public LinkedListType Type { get { return type; } private set { type = value; } }
         protected int count;
 
         public int Count { get => count; private set => count = value; }
