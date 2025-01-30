@@ -3,18 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LinkedListBase;
 
 namespace DataStructures
 {
-    public class LinkedList<T> : ICircular<T>, ICollection<T>, ICollection where T: class
+    public class LinkedList<T> : ICollection<T>, ICollection where T: class
     {
         protected Node<T>? head;
         protected Node<T>? current;
         protected Node<T>? last;
 
-        protected LinkedListType type;
-
-        public LinkedListType Type { get { return type; } private set { type = value; } }
         protected int count;
 
         public int Count { get => count; private set => count = value; }
@@ -23,18 +21,11 @@ namespace DataStructures
         public Node<T>? Current { get => current; private set => current = value; }
         public Node<T>? Head { get => head; private set => head = value; }
 
-        public bool IsCircular { get; private set;}
-
         public T Data => Current!.Data!;
         
         public LinkedList<T> Next
         {
-            get {Current = Current!.Next; return this;}
-        }
-
-        public LinkedList<T> Previous
-        {
-            get {Current = Current!.Previous; return this;}
+            get { Current = Current!.Next; return this; }
         }
 
         protected bool IsReadOnly
@@ -57,26 +48,15 @@ namespace DataStructures
 
         bool ICollection<T>.IsReadOnly => IsReadOnly;
 
-        bool ICircular<T>.IsCircular
+
+        public LinkedList(T data)
         {
-            get => IsCircular;
-            set => IsCircular = value;
+            Add(data);         
         }
 
-        public LinkedList(ICollection<T> data) : this(data, false) {}
-
-        public LinkedList(T data) : this(data, false) {}
-
-        public LinkedList(T data, bool isCircular)
+        public LinkedList(ICollection<T> data) 
         {
             Add(data);
-            IsCircular = isCircular;            
-        }
-
-        public LinkedList(ICollection<T> data, bool isCircular) 
-        {
-            Add(data);
-            IsCircular = isCircular;
         }
 
         public void AddToEnd(T item)
@@ -89,16 +69,6 @@ namespace DataStructures
         {            
             Last!.Next = node;
             Last = Last!.Next;
-
-            SetIsCircular(IsCircular);
-        }
-
-        private void SetIsCircular(bool isCircular)
-        {
-            if(isCircular)
-            {
-                Last!.Next = Head;
-            }
         }
         
         public void AddToHead(Node<T> node)
@@ -116,8 +86,6 @@ namespace DataStructures
                 Head.Next = tempNode;
                 Reset();
             }
-
-            SetIsCircular(IsCircular);
         }
 
         public void AddAfter(Node<T> node)

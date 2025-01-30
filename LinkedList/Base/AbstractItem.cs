@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DataStructures
+namespace LinkedListBase
 {
     public abstract class Item<T> : IData<T> where T : class
     {

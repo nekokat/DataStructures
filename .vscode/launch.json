@@ -9,7 +9,7 @@
             "name": "Debug",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/Data/bin/Debug/net8.0/Data.dll",
+            "program": "${workspaceFolder}/LinkedList/bin/Debug/net8.0/LinkedList.dll",
             "stopAtEntry": true,
             "pipeTransport": { 
                 "pipeCwd": "${workspaceFolder}",

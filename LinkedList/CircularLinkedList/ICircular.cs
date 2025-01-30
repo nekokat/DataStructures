@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DataStructures
+namespace LinkedListCircular
 {
     public interface ICircular<T> where T : class
     {

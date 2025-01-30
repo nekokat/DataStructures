@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DataStructures
+namespace LinkedListBase
 {
     public interface IPrev<T> where T : class
     {

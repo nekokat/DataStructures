@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataStructures;
 
-namespace DataStructures
+namespace LinkedListBase
 {
     public class Node<T> : Item<T>, INext<T>, IPrev<T>  where T : class
     {

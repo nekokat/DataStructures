@@ -1,5 +1,6 @@
 using DataStructures;
 using System.Linq;
+using LinkedListBase;
 
 namespace Tests;
 
@@ -14,7 +15,7 @@ public class LinkedListTests
     {
         ValueData = new() { "One", "Two", "Three", "Four", "Five"};
         Value = new(ValueData);
-        CircularValue = new(ValueData, true);
+        CircularValue = new(ValueData);
     }
 
     [TestCase("One")]
@@ -155,12 +156,5 @@ public class LinkedListTests
         ValueData!.Insert(++position, value);
 
         Assert.That(Value.AsList(), Is.EqualTo(ValueData));
-    }
-
-    [Test]
-    public void LinkedListIsCircularTest()
-    {
-        Assert.That(Value.IsCircular, Is.False);
-        Assert.That(CircularValue.IsCircular, Is.True);
     }
 }

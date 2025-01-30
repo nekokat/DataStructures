@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DataStructures
+namespace LinkedListBase
 {
-    public interface IData<T> where T : class
+    public interface INext<T> where T : class
     {
-        T? Data { get; set;}
+        public Node<T>? Next { get; set;}
     }
 }
